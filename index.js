@@ -116,20 +116,13 @@ client.on("message", (message) => {
     return message.delete().catch(console.error)
   }
 
-  if (
-    message.content.toLowerCase().includes("salut") ||
-    message.content.toLowerCase().includes("bonjour") ||
-    message.content.toLowerCase().includes("coucou") ||
-    message.content.toLowerCase().includes("slt") ||
-    message.content.toLowerCase().includes("bjr") ||
-    message.content.toLowerCase().includes("cc")
-  )
-    return message.react("👋")
-})
-const attachment = new Discord.MessageAttachment("20200529_013727.jpg")
+  if (message.content.toLowerCase().includes("salut") || message.content.toLowerCase().includes("bonjour") || message.content.toLowerCase().includes("coucou") || message.content.toLowerCase().includes("slt") || message.content.toLowerCase().includes("bjr") || message.content.toLowerCase().includes("cc")) return message.react("👋")
+  
+  const attachment = new Discord.MessageAttachment("20200529_013727.jpg")
   if(attachment) {
     message.delete()
-}
+  }
+})
 
 //Join Message
 client.on("guildMemberAdd", (member) => {
