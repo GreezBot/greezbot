@@ -117,11 +117,7 @@ client.on("message", (message) => {
   }
 
   if (message.content.toLowerCase().includes("salut") || message.content.toLowerCase().includes("bonjour") || message.content.toLowerCase().includes("coucou") || message.content.toLowerCase().includes("slt") || message.content.toLowerCase().includes("bjr") || message.content.toLowerCase().includes("cc")) return message.react("👋")
-
-  const attachment = new Discord.MessageAttachment.name("20200529_013727.jpg")
-  if(attachment) {
-    message.delete()
-  }
+  
 })
 
 //Join Message
