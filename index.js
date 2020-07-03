@@ -118,8 +118,10 @@ client.on("message", (message) => {
 
   if (message.content.toLowerCase().includes("salut") || message.content.toLowerCase().includes("bonjour") || message.content.toLowerCase().includes("coucou") || message.content.toLowerCase().includes("slt") || message.content.toLowerCase().includes("bjr") || message.content.toLowerCase().includes("cc")) return message.react("👋")
   
-  if(message.content(attachments)) {
-    console.log(message.attachments)
+  const attachment = new Discord.MessageAttachment()
+
+  if(message.content(attachment)) {
+    console.log(attachment)
   }
   
 })
