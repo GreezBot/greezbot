@@ -127,7 +127,7 @@ client.on("message", (message) => {
     return message.react("👋")
 })
 const attachment = new Discord.MessageAttachment("20200529_013727.jpg")
-  if(message.content(attachment)) {
+  if(attachment) {
     message.delete()
 }
 
