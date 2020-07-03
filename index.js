@@ -118,7 +118,10 @@ client.on("message", (message) => {
 
   if (message.content.toLowerCase().includes("salut") || message.content.toLowerCase().includes("bonjour") || message.content.toLowerCase().includes("coucou") || message.content.toLowerCase().includes("slt") || message.content.toLowerCase().includes("bjr") || message.content.toLowerCase().includes("cc")) return message.react("👋")
   
-  console.log(message.attachments)
+  if(message.content(attachments)) {
+    console.log(message.attachments)
+  }
+  
 })
 
 //Join Message
