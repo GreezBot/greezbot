@@ -1,0 +1,22 @@
+{
+  "prefix": "&",
+  "ytbApi": "AIzaSyDBv9GdEQuziXxwi31hYO8YzulBpoiJRS4",
+  "sanChan": "681173328139911178",
+  "djRole": "728010796382289960",
+  "bypass": "728272103773569095",
+  "whitelistRole": "728218136041619497",
+  "greeting": {
+    "channel": "669878585984679936",
+    "role": "551049035784388630"
+  },
+  "reactionRole": {
+    "724743590798164109": {
+      "removable": false,
+      "emojis": [{
+        "name": "✅",
+        "roles": "724742943180587058"
+      }]
+    }
+  },
+  "roleMute": "676075001522159616"
+}

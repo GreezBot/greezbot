@@ -1,0 +1,26 @@
+{
+  "name": "greez-bot",
+  "version": "1.0.0",
+  "description": "",
+  "engines": {
+    "node": "12.18.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "RyTale",
+  "license": "ISC",
+  "dependencies": {
+    "ascii-table": "0.0.9",
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "mathjs": "^7.0.2",
+    "ms": "^2.1.2",
+    "node-gyp": "^7.0.0",
+    "opusscript": "0.0.7",
+    "simple-youtube-api": "^5.2.1",
+    "ytdl-core": "^2.1.7"
+  }
+}
