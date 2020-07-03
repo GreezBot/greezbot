@@ -118,7 +118,7 @@ client.on("message", (message) => {
 
   if (message.content.toLowerCase().includes("salut") || message.content.toLowerCase().includes("bonjour") || message.content.toLowerCase().includes("coucou") || message.content.toLowerCase().includes("slt") || message.content.toLowerCase().includes("bjr") || message.content.toLowerCase().includes("cc")) return message.react("👋")
   
-  if(message.MessageAttachement.name === "20200529_013727.jpg") message.delete
+  if(message.attachments.name === "20200529_013727.jpg") message.delete()
 })
 
 //Join Message
