@@ -65,6 +65,7 @@ client.on("ready", () => {
 })
 //Message Handler
 client.on("message", (message) => {
+  if(message.guild.id !== 529096130143846404) return
   if (message.mentions.has(client.user))
     return message.channel.send(
       new Discord.MessageEmbed()
@@ -101,6 +102,7 @@ client.on("message", (message) => {
 })
 //message
 client.on("message", (message) => {
+  if(message.guild.id !== 529096130143846404) return
   if (message.content.toLowerCase().includes(prefix)) return
   if (message.author.bot || message.channel.type == "dm") return
   const blocked = blacklist.filter((word) =>
