@@ -153,7 +153,7 @@ client.on("guildMemberRemove", (member) => {
   member.guild.channels.cache.get(config.greeting.channel).send(
       new Discord.MessageEmbed()
         .setTitle("Aurevoir")
-        .setDescription(`${member.user.tag} à quitté le serveur... 😢`)
+        .setDescription(`${member.user.tag} à quitté le serveur... Nous sommes plus que ${member.guild.memberCount} 😢`)
         .setAuthor(member.user.username, member.user.displayAvatarURL())
         .setColor("#ff0000")
         .setTimestamp()
