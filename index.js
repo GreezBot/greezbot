@@ -124,6 +124,7 @@ client.on("message", (message) => {
 
 //Join Message
 client.on("guildMemberAdd", (member) => {
+  if(member.guild.id !== 529096130143846404) return
   member.guild.fetchInvites().then((guildInvites) => {
     const ei = invites[member.guild.id]
     invites[member.guild.id] = guildInvites
@@ -148,9 +149,8 @@ client.on("guildMemberAdd", (member) => {
 })
 //Leave Message
 client.on("guildMemberRemove", (member) => {
-  member.guild.channels.cache
-    .get(config.greeting.channel)
-    .send(
+  if(member.guild.id !== 529096130143846404) return
+  member.guild.channels.cache.get(config.greeting.channel).send(
       new Discord.MessageEmbed()
         .setTitle("Aurevoir")
         .setDescription(`${member.user.tag} à quitté le serveur... 😢`)
