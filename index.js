@@ -101,6 +101,7 @@ client.on("message", (message) => {
 })
 //message
 client.on("message", (message) => {
+  
   if (message.content.toLowerCase().includes(prefix)) return
   if (message.author.bot || message.channel.type == "dm") return
   const blocked = blacklist.filter((word) =>
