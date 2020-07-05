@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const encode = require('strict-uri-encode')
-const attachment = new Discord.MessageAttachment('../assets/lmgtfy.png', 'lmgtfy.png')
+
 module.exports.run = async (client, message, args) => {
 
     let question = encode(args.join(' '))
@@ -10,7 +10,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send(new Discord.MessageEmbed()
     .setDescription(`Lien: ${link}`)
     .setColor('#ff0000')
-    .setThumbnail('attachment://lmgtfy.png')
+    .setThumbnail('https://imgur.com/a/ZkHxvK4')
     .setAuthor(message.author.tag, message.author.displayAvatarURL())
     )
 }
