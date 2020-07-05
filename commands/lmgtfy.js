@@ -7,10 +7,10 @@ module.exports.run = async (client, message, args) => {
     
     let link = `https://www.lmgtfy.com/?q=${question}`
 
-    message.channel.send( new Discord.MessageEmbed()
-    .setDescription(`Je te laisse aller [ICI](${link})`))
+    message.channel.send(new Discord.MessageEmbed()
+    .setDescription(`Lien: ${link}`)
     .setColor('#ff0000')
-    .setAuthor(message.author.tag, message.author.displayAvatarURL()
+    .setAuthor(message.author.tag, message.author.displayAvatarURL())
     )
 }
 
