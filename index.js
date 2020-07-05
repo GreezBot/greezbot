@@ -185,10 +185,11 @@ client.on("messageReactionRemove", (reaction, user) => {
 })
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
-  const textChannel = message.guild.channels.cache.get('669894684797173761')
   if(newMember) {
+    let textChannel = newMember.guild.channels.cache.get('669894684797173761')
     textChannel.send(`${newMember.user.username} (${newMember.id}) has joined the channel`)
   } else if (oldMember) {
+    let textChannel = oldMember.guild.channels.cache.get('669894684797173761')
     textChannel.send(`${newMember.user.username} (${newMember.id}) has left the channel`)
   }
 })
