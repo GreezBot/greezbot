@@ -21,6 +21,7 @@
     "node-gyp": "^7.0.0",
     "opusscript": "0.0.7",
     "simple-youtube-api": "^5.2.1",
+    "strict-uri-encode": "^2.0.0",
     "ytdl-core": "^2.1.7"
   }
 }
