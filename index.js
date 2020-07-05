@@ -101,7 +101,7 @@ client.on("message", (message) => {
 })
 //message
 client.on("message", (message) => {
-  
+
   if (message.content.toLowerCase().includes(prefix)) return
   if (message.author.bot || message.channel.type == "dm") return
   const blocked = blacklist.filter((word) =>
@@ -182,4 +182,13 @@ client.on("messageReactionRemove", (reaction, user) => {
     (emoji) => emoji[prop] === reaction.emoji[prop]
   )
   if (emoji) reaction.message.guild.member(user).roles.remove(emoji.roles)
+})
+
+client.on('voiceStateUpdate', (oldMember, newMember) => {
+  const textChannel = message.guild.channels.cache.get('669894684797173761')
+  if(newMember) {
+    textChannel.send(`${newMember.user.username} (${newMember.id}) has joined the channel`)
+  } else if (oldMember) {
+    textChannel.send(`${newMember.user.username} (${newMember.id}) has left the channel`)
+  }
 })
