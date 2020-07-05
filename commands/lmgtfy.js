@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const encode = require('strict-uri-encode')
-const attachment = new Discord.Attachment('../assets/lmgtfy.png', 'lmgtfy.png')
+const attachment = new Discord.MessageAttachment('../assets/lmgtfy.png', 'lmgtfy.png')
 module.exports.run = async (client, message, args) => {
 
     let question = encode(args.join(' '))
