@@ -20,6 +20,7 @@ client.commands = new Discord.Collection()
 client.aliases = new Discord.Collection()
 
 const blacklist = require("./blacklist.json")
+const { isNullOrUndefined } = require("util")
 
 const invites = {}
 
@@ -144,8 +145,10 @@ client.on("guildMemberAdd", (member) => {
           .setColor("#00ff00")
           .setTimestamp()
           .setFooter(`Invité par ${inviter.tag} • Code: ${invite.code}`)
-      );
+      )
     member.roles.add(config.greeting.role)
+    let textChannel = oldMember.guild.channels.cache.get('669894684797173761')
+    
   })
 })
 //Leave Message
@@ -184,12 +187,76 @@ client.on("messageReactionRemove", (reaction, user) => {
   if (emoji) reaction.message.guild.member(user).roles.remove(emoji.roles)
 })
 
-client.on('voiceStateUpdate', (oldMember, newMember) => {
-  if(newMember) {
+/*client.on('voiceStateUpdate', (oldMember, newMember) => {
+
+  let newUserChannel = newMember.channel
+  let oldUserChannel = oldMember.channel
+
+  if(newUserChannel) {
     let textChannel = newMember.guild.channels.cache.get('669894684797173761')
-    textChannel.send(`${newMember.user.username} (${newMember.id}) has joined the channel`)
-  } else if (oldMember) {
+    textChannel.send(new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setDescription(`${newMember.member} a rejoint le salon vocal **${newUserChannel.name}**`)
+    .setAuthor(`${newMember.member.user.tag}`, `${newMember.member.user.displayAvatarURL()}`)
+    .setFooter(`ID : ${newMember.id}`)
+    .setTimestamp()
+    )
+  } else if (oldUserChannel) {
     let textChannel = oldMember.guild.channels.cache.get('669894684797173761')
-    textChannel.send(`${newMember.user.username} (${newMember.id}) has left the channel`)
+    textChannel.send(new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setDescription(`${oldMember.member} a quitté le salon vocal **${oldUserChannel.name}**`)
+    .setAuthor(`${oldMember.member.user.tag}`, `${oldMember.member.user.displayAvatarURL()}`)
+    .setFooter(`ID : ${oldMember.id}`)
+    .setTimestamp()
+    )
+  } else{
+    let textChannel = newMember.guild.channels.cache.get('669894684797173761')
+    textChannel.send(new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setDescription(`${newMember.member} a été déplacé.`)
+    .addField(`Channel Avant`, oldUserChannel.name)
+    .addField(`Channel Après`, newUserChannel.name)
+    .setAuthor(`${newMember.member.user.tag}`, `${newMember.member.user.displayAvatarURL()}`)
+    .setFooter(`ID : ${newMember.id}`)
+    .setTimestamp()
+    )
+  }
+})*/
+
+client.on('voiceStateUpdate', (oldMember, newMember) => {
+
+  let newUserChannel = newMember.channel
+  let oldUserChannel = oldMember.channel
+
+  if(oldUserChannel && newUserChannel) {
+    let textChannel = newMember.guild.channels.cache.get('669894684797173761')
+    textChannel.send(new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setDescription(`${newMember.member} a été déplacé.`)
+    .addField(`Channel Avant`, oldUserChannel.name, true)
+    .addField(`Channel Après`, newUserChannel.name, true)
+    .setAuthor(`${newMember.member.user.tag}`, `${newMember.member.user.displayAvatarURL()}`)
+    .setFooter(`ID : ${newMember.id}`)
+    .setTimestamp()
+    )
+  } else if (!oldUserChannel && newUserChannel) {
+    let textChannel = newMember.guild.channels.cache.get('669894684797173761')
+    textChannel.send(new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setDescription(`${newMember.member} a rejoint le salon vocal **${newUserChannel.name}**`)
+    .setAuthor(`${newMember.member.user.tag}`, `${newMember.member.user.displayAvatarURL()}`)
+    .setFooter(`ID : ${newMember.id}`)
+    .setTimestamp()
+    )
+  } else{
+    let textChannel = oldMember.guild.channels.cache.get('669894684797173761')
+    textChannel.send(new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setDescription(`${oldMember.member} a quitté le salon vocal **${oldUserChannel.name}**`)
+    .setAuthor(`${oldMember.member.user.tag}`, `${oldMember.member.user.displayAvatarURL()}`)
+    .setFooter(`ID : ${oldMember.id}`)
+    .setTimestamp()
+    )
   }
 })
