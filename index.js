@@ -126,7 +126,9 @@ client.on("message", (message) => {
 
 //Join Message
 client.on("guildMemberAdd", (member) => {
-  if(member.guild.id !== 529096130143846404) return
+  guildID = member.guild.id
+  if(member.guild.id !== guildID) return
+  let textChannel = member.guild.channels.cache.get('669894684797173761')
   member.guild.fetchInvites().then((guildInvites) => {
     const ei = invites[member.guild.id]
     invites[member.guild.id] = guildInvites
@@ -147,13 +149,20 @@ client.on("guildMemberAdd", (member) => {
           .setFooter(`Invité par ${inviter.tag} • Code: ${invite.code}`)
       )
     member.roles.add(config.greeting.role)
-    let textChannel = oldMember.guild.channels.cache.get('669894684797173761')
-    
+    textChannel.send(new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setDescription(`📥 ${member} **a rejoint le serveur.**`)
+    .setAuthor(`${member.user.tag}`, `${member.user.displayAvatarURL()}`)
+    .setFooter(`ID : ${member.id}`)
+    .setTimestamp()
+  )
   })
 })
 //Leave Message
 client.on("guildMemberRemove", (member) => {
-  if(member.guild.id !== 529096130143846404) return
+  guildID = member.guild.id
+  if(member.guild.id !== guildID) return
+  let textChannel = member.guild.channels.cache.get('669894684797173761')
   member.guild.channels.cache.get(config.greeting.channel).send(
       new Discord.MessageEmbed()
         .setTitle("Aurevoir")
@@ -162,6 +171,14 @@ client.on("guildMemberRemove", (member) => {
         .setColor("#ff0000")
         .setTimestamp()
     )
+    member.roles.add(config.greeting.role)
+    textChannel.send(new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setDescription(`📤 ${member} **a quitté le serveur.**`)
+    .setAuthor(`${member.user.tag}`, `${member.user.displayAvatarURL()}`)
+    .setFooter(`ID : ${member.id}`)
+    .setTimestamp()
+  )
 })
 //Reaction Add
 client.on("messageReactionAdd", (reaction, user) => {
@@ -187,60 +204,12 @@ client.on("messageReactionRemove", (reaction, user) => {
   if (emoji) reaction.message.guild.member(user).roles.remove(emoji.roles)
 })
 
-/*client.on('voiceStateUpdate', (oldMember, newMember) => {
-
-  let newUserChannel = newMember.channel
-  let oldUserChannel = oldMember.channel
-
-  if(newUserChannel) {
-    let textChannel = newMember.guild.channels.cache.get('669894684797173761')
-    textChannel.send(new Discord.MessageEmbed()
-    .setColor('#ff0000')
-    .setDescription(`${newMember.member} a rejoint le salon vocal **${newUserChannel.name}**`)
-    .setAuthor(`${newMember.member.user.tag}`, `${newMember.member.user.displayAvatarURL()}`)
-    .setFooter(`ID : ${newMember.id}`)
-    .setTimestamp()
-    )
-  } else if (oldUserChannel) {
-    let textChannel = oldMember.guild.channels.cache.get('669894684797173761')
-    textChannel.send(new Discord.MessageEmbed()
-    .setColor('#ff0000')
-    .setDescription(`${oldMember.member} a quitté le salon vocal **${oldUserChannel.name}**`)
-    .setAuthor(`${oldMember.member.user.tag}`, `${oldMember.member.user.displayAvatarURL()}`)
-    .setFooter(`ID : ${oldMember.id}`)
-    .setTimestamp()
-    )
-  } else{
-    let textChannel = newMember.guild.channels.cache.get('669894684797173761')
-    textChannel.send(new Discord.MessageEmbed()
-    .setColor('#ff0000')
-    .setDescription(`${newMember.member} a été déplacé.`)
-    .addField(`Channel Avant`, oldUserChannel.name)
-    .addField(`Channel Après`, newUserChannel.name)
-    .setAuthor(`${newMember.member.user.tag}`, `${newMember.member.user.displayAvatarURL()}`)
-    .setFooter(`ID : ${newMember.id}`)
-    .setTimestamp()
-    )
-  }
-})*/
-
 client.on('voiceStateUpdate', (oldMember, newMember) => {
 
   let newUserChannel = newMember.channel
   let oldUserChannel = oldMember.channel
 
-  if(oldUserChannel && newUserChannel) {
-    let textChannel = newMember.guild.channels.cache.get('669894684797173761')
-    textChannel.send(new Discord.MessageEmbed()
-    .setColor('#ff0000')
-    .setDescription(`${newMember.member} a été déplacé.`)
-    .addField(`Channel Avant`, oldUserChannel.name, true)
-    .addField(`Channel Après`, newUserChannel.name, true)
-    .setAuthor(`${newMember.member.user.tag}`, `${newMember.member.user.displayAvatarURL()}`)
-    .setFooter(`ID : ${newMember.id}`)
-    .setTimestamp()
-    )
-  } else if (!oldUserChannel && newUserChannel) {
+  if (!oldUserChannel && newUserChannel) {
     let textChannel = newMember.guild.channels.cache.get('669894684797173761')
     textChannel.send(new Discord.MessageEmbed()
     .setColor('#ff0000')
@@ -249,14 +218,36 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
     .setFooter(`ID : ${newMember.id}`)
     .setTimestamp()
     )
-  } else{
-    let textChannel = oldMember.guild.channels.cache.get('669894684797173761')
-    textChannel.send(new Discord.MessageEmbed()
-    .setColor('#ff0000')
-    .setDescription(`${oldMember.member} a quitté le salon vocal **${oldUserChannel.name}**`)
-    .setAuthor(`${oldMember.member.user.tag}`, `${oldMember.member.user.displayAvatarURL()}`)
-    .setFooter(`ID : ${oldMember.id}`)
-    .setTimestamp()
+  } else if (oldUserChannel && !newUserChannel){
+      let textChannel = oldMember.guild.channels.cache.get('669894684797173761')
+      textChannel.send(new Discord.MessageEmbed()
+      .setColor('#ff0000')
+      .setDescription(`${oldMember.member} a quitté le salon vocal **${oldUserChannel.name}**`)
+      .setAuthor(`${oldMember.member.user.tag}`, `${oldMember.member.user.displayAvatarURL()}`)
+      .setFooter(`ID : ${oldMember.id}`)
+      .setTimestamp()
     )
-  }
+  } else if(oldUserChannel && newUserChannel) {
+      if(oldUserChannel !== newUserChannel){
+        let textChannel = newMember.guild.channels.cache.get('669894684797173761')
+        textChannel.send(new Discord.MessageEmbed()
+      .setColor('#ff0000')
+      .setDescription(`${newMember.member} a été déplacé.`)
+      .addField(`Channel Avant`, oldUserChannel.name, true)
+      .addField(`Channel Après`, newUserChannel.name, true)
+      .setAuthor(`${newMember.member.user.tag}`, `${newMember.member.user.displayAvatarURL()}`)
+      .setFooter(`ID : ${newMember.id}`)
+      .setTimestamp()
+      )
+    } else {
+      let textChannel = newMember.guild.channels.cache.get('669894684797173761')
+      textChannel.send(new Discord.MessageEmbed()
+      .setColor('#ff0000')
+      .setDescription(`${newMember.member} a été mute/demute.`)
+      .setAuthor(`${newMember.member.user.tag}`, `${newMember.member.user.displayAvatarURL()}`)
+      .setFooter(`ID : ${newMember.id}`)
+      .setTimestamp()
+      )
+    }
+  } 
 })
