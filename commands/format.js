@@ -2,9 +2,8 @@ const Discord = require('discord.js')
 const moment = require('moment')
 
 module.exports.run = async (client, message, args) => {
-
-    const moment = 
-    console.log(moment(member.user.createdTimestamp).fromNow())
+    moment.locale('fr')
+    console.log(moment(message.author.createdAt).fromNow())
     
 }
 

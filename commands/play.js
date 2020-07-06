@@ -95,9 +95,9 @@ module.exports.run = async (client, message, args, url, prefix, serverQueue, que
             if(!song) {
                 setTimeout(() => {
                     serverQueue.voiceChannel.leave()
-                    
+                    queue.delete(guild.id)
                 }, 60000*15)
-                queue.delete(guild.id)
+                
                 return
             }
          

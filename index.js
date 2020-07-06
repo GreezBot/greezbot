@@ -13,14 +13,15 @@ const client = new Discord.Client({
   config = require("./config.json"),
   fs = require("fs"),
   youtube = new YouTube(config.ytbApi),
-  prefix = config.prefix
+  prefix = config.prefix,
+  moment = require('moment')
 
 client.login(process.env.TOKEN)
 client.commands = new Discord.Collection()
 client.aliases = new Discord.Collection()
 
+moment.locale('fr')
 const blacklist = require("./blacklist.json")
-const { isNullOrUndefined } = require("util")
 
 const invites = {}
 
@@ -126,7 +127,7 @@ client.on("message", (message) => {
 
 //Join Message
 client.on("guildMemberAdd", (member) => {
-  guildID = member.guild.id
+  guildID = ('529096130143846404')
   if(member.guild.id !== guildID) return
   let textChannel = member.guild.channels.cache.get('669894684797173761')
   member.guild.fetchInvites().then((guildInvites) => {
@@ -152,6 +153,7 @@ client.on("guildMemberAdd", (member) => {
     textChannel.send(new Discord.MessageEmbed()
     .setColor('#ff0000')
     .setDescription(`📥 ${member} **a rejoint le serveur.**`)
+    .addField(`Création du compte`, `${moment(member.user.createdAt).fromNow()}.`)
     .setAuthor(`${member.user.tag}`, `${member.user.displayAvatarURL()}`)
     .setFooter(`ID : ${member.id}`)
     .setTimestamp()
@@ -160,7 +162,7 @@ client.on("guildMemberAdd", (member) => {
 })
 //Leave Message
 client.on("guildMemberRemove", (member) => {
-  guildID = member.guild.id
+  guildID = ('529096130143846404')
   if(member.guild.id !== guildID) return
   let textChannel = member.guild.channels.cache.get('669894684797173761')
   member.guild.channels.cache.get(config.greeting.channel).send(
@@ -171,10 +173,10 @@ client.on("guildMemberRemove", (member) => {
         .setColor("#ff0000")
         .setTimestamp()
     )
-    member.roles.add(config.greeting.role)
     textChannel.send(new Discord.MessageEmbed()
     .setColor('#ff0000')
     .setDescription(`📤 ${member} **a quitté le serveur.**`)
+    .addField(`Membre depuis`, `${moment(member.joinedAt).fromNow()}.`)
     .setAuthor(`${member.user.tag}`, `${member.user.displayAvatarURL()}`)
     .setFooter(`ID : ${member.id}`)
     .setTimestamp()
@@ -251,3 +253,77 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
     }
   } 
 })
+
+client.on('guildBanAdd', async (guild, member) => {
+  guildID = ('529096130143846404')
+  if(guild.id !== guildID) return
+  let textChannel = guild.channels.cache.get('669894684797173761')
+
+	const fetchedLogs = await guild.fetchAuditLogs({
+		limit: 1,
+		type: 'MEMBER_BAN_ADD',
+  })
+  
+	const banLog = fetchedLogs.entries.first()
+
+	if (!banLog) return console.log(`${member.tag} was banned from ${guild.name} but no audit log could be found.`)
+
+  const { executor, target } = banLog
+  
+	if (target.id === member.id) {
+    textChannel.send(new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setDescription(`${member.tag} a été banni par ${executor.tag}.`)
+    .setAuthor(`Bannissement`, `${member.displayAvatarURL()}`)
+    .setThumbnail(member.displayAvatarURL())
+    .setFooter(`ID : ${member.id}`)
+    .setTimestamp()
+  )
+	} else {
+    textChannel.send(new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setDescription(`${member.tag} a été banni.`)
+    .setAuthor(`Bannissement`, `${member.displayAvatarURL()}`)
+    .setThumbnail(member.displayAvatarURL())
+    .setFooter(`ID : ${member.id}`)
+    .setTimestamp()
+  )
+	}
+})
+
+/*client.on('guildBanRemove', async (guild, member) => {
+  guildID = ('529096130143846404')
+  if(guild.id !== guildID) return
+  let textChannel = guild.channels.cache.get('669894684797173761')
+
+	const fetchedLogs = await guild.fetchAuditLogs({
+		limit: 1,
+		type: 'MEMBER_BAN_ADD',
+  })
+  
+	const banLog = fetchedLogs.entries.first()
+
+	if (!banLog) return console.log(`${member.tag} was banned from ${guild.name} but no audit log could be found.`)
+
+  const { executor, target } = banLog
+  
+	if (target.id === member.id) {
+    textChannel.send(new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setDescription(`${member.tag} a été banni par ${executor.tag}.`)
+    .setAuthor(`Bannissement`, `${member.displayAvatarURL()}`)
+    .setThumbnail(member.displayAvatarURL())
+    .setFooter(`ID : ${member.id}`)
+    .setTimestamp()
+  )
+	} else {
+    textChannel.send(new Discord.MessageEmbed()
+    .setColor('#ff0000')
+    .setDescription(`${member.tag} a été banni.`)
+    .setAuthor(`Bannissement`, `${member.displayAvatarURL()}`)
+    .setThumbnail(member.displayAvatarURL())
+    .setFooter(`ID : ${member.id}`)
+    .setTimestamp()
+  )
+	}
+})*/
