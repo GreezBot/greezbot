@@ -93,10 +93,8 @@ module.exports.run = async (client, message, args, url, prefix, serverQueue, que
             const serverQueue = queue.get(guild.id)
          
             if(!song) {
-                setTimeout(() => {
                     serverQueue.voiceChannel.leave()
                     queue.delete(guild.id)
-                }, 60000*15)
                 
                 return
             }
@@ -110,7 +108,7 @@ module.exports.run = async (client, message, args, url, prefix, serverQueue, que
                 console.log(error)
             })
             dispatcher.setVolumeLogarithmic(serverQueue.volume / 5)
-         
+        
             serverQueue.textChannel.send(new Discord.MessageEmbed()
                 .setColor('#ff0000')
                 .setTitle('**Je lance**')
