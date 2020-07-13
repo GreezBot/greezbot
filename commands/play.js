@@ -91,10 +91,18 @@ module.exports.run = async (client, message, args, url, prefix, serverQueue, que
 
         function play(guild, song) {
             const serverQueue = queue.get(guild.id)
-         
             if(!song) {
+                setTimeout(() => {
+
+                    message.channel.send(new Discord.MessageEmbed()
+                    .setDescription(`Je me suis déconnecté car il n'y avait plus de musique.`)
+                    .setColor('#ff0000')
+                    )
                     serverQueue.voiceChannel.leave()
                     queue.delete(guild.id)
+
+
+                }, 15000)
                 
                 return
             }
