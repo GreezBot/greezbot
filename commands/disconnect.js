@@ -10,10 +10,10 @@ module.exports.run = async (client, message, args, url, prefix, serverQueue, que
         .setColor('#ff0000')
         .setDescription('Il n\'y a aucune musique en cours.')
         )
+        message.react('🛑')
         message.member.voice.channel.leave()
         serverQueue.songs = []
         serverQueue.connection.dispatcher.end()
-        message.react('🛑')
         return undefined
     
 }
