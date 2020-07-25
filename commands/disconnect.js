@@ -13,7 +13,6 @@ module.exports.run = async (client, message, args, url, prefix, serverQueue, que
         message.react('🛑')
         message.member.voice.channel.leave()
         serverQueue.songs = []
-        serverQueue.connection.dispatcher.end()
         return undefined
     
 }
