@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 
 module.exports.run = async (client, message, args, url, prefix, serverQueue, queue) => {
-
+    const guild = message.guild
     if(!message.member.voice.channel) return message.channel.send(new Discord.MessageEmbed()
         .setColor('#ff0000')
         .setDescription('Tu dois être dans un salon vocal 🎤 pour executer cette commande.')
@@ -11,9 +11,8 @@ module.exports.run = async (client, message, args, url, prefix, serverQueue, que
         .setDescription('Il n\'y a aucune musique en cours.')
         )
         message.react('🛑')
-        serverQueue.songs = []
-        serverQueue.connection.dispatcher.end()
-        message.member.voice.channel.leave()
+        serverQueue.voiceChannel.leave()
+        queue.delete(guild.id)
         return undefined
     
 }
