@@ -1,8 +1,1 @@
-"# greez--bot" 
-"# greez-bot" 
-"# greez-bot" 
-"# greez-bot" 
-"# greez-bot" 
-"# greez-bot" 
-"# gb" 
-"# greezbot" 
+
